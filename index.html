@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="index.css" />
+    <title>Caculate GB</title>
+</head>
+
+<body>
+    <div class="input-text-container">
+        <div class="GB1-container">
+            <span>GB1:</span>
+            <input class='GB1-input' />
+        </div>
+        <div class="GB2-container">
+            <span>GB2:</span>
+            <input class='GB2-input' />
+        </div>
+        <div class="infusion-container">
+            <span>infusion:</span>
+            <input class='infusion-input' />
+        </div>
+        <button class="cal-btn" onclick="calInfusion()">Calculate Infusion</button>
+    </div>
+    <div>
+        <span>
+            infusion 2: <input class="infusion-result"></input>
+        </span>
+    </div>
+</body>
+<script>
+    function calInfusion() {
+        const BG1 = document.getElementsByClassName("GB1-input")[0].value;
+        const BG2 = document.getElementsByClassName("GB2-input")[0].value;
+        const infusion = document.getElementsByClassName("infusion-input")[0].value;
+        console.log(parseInt(BG1),"debug bg1");
+        console.log(parseInt(BG2),"debug bg2");
+        console.log(infusion,"debug infusion ");
+        const isBG1EqualBG2 = BG1 === BG2;
+        let msg;
+        let totalBG;
+        let isBG1GreaterBG2 = false;
+        let infusionResult = 0;
+        if (BG1 > BG2) {
+            isBG1GreaterBG2 = true;
+            totalBG = BG1 - BG2;
+        } else {
+            totalBG = BG2 - BG1;
+        }
+        switch (true) {
+            case (BG1 || BG2) >= 75 && (isBG1EqualBG2) <= 99:
+                if (!isBG1GreaterBG2) {
+                    msg = 'No Fusion change';
+                } else if ((totalBG >= 1 && totalBG <= 25) || BG1 === BG2) {
+                    infusionResult = infusion - calDelta(infusion, 1);
+                }
+                else if (totalBG >= 25) {
+                    msg = 'HOLD for 30 second then infusion:';
+                    infusionResult = infusion - calDelta(infusion, 2);
+                }
+
+                break;
+            case (BG1 || BG2) >= 100 && (BG1 || BG2) <= 139:
+                if (totalBG >= 1 && totalBG <= 25 || isBG1EqualBG2) {
+                    msg = 'No Fusion change';
+                } else if ((totalBG >= 26 && totalBG <= 50)) {
+                    infusionResult = infusion - calDelta(infusion, 1);
+                }
+                else if (!isBG1GreaterBG2 && totalBG >= 25) {
+                    infusionResult = infusion + calDelta(infusion, 1);
+                }
+                else if (totalBG >= 55) {
+                    msg = 'HOLD for 30 second then infusion:';
+                    infusionResult = infusion - calDelta(infusion, 2);
+                }
+                break;
+            case (BG1 || BG2) >= 140 && (BG1 || BG2) <= 199:
+                if (totalBG >= 1 && totalBG <= 50 && isBG1GreaterBG2) {
+                    msg = 'No Fusion change';
+                } else if ((totalBG >= 1 && totalBG <= 50 && !isBG1GreaterBG2) || isBG1EqualBG2) {
+                    infusionResult = infusion + calDelta(infusion, 1);
+                }
+                else if (totalBG >= 50 && !isBG1GreaterBG2) {
+                    infusionResult = infusion + calDelta(infusion, 2);
+                }
+                else if (totalBG >= 51 && totalBG <= 75 && isBG1GreaterBG2) {
+                    infusionResult = infusion - calDelta(infusion, 1);
+                }
+                else if (totalBG >= 75) {
+                    msg = 'HOLD for 30 second then infusion:';
+                    infusionResult = infusion - calDelta(infusion, 2);
+                }
+                break;
+            case (BG1 || BG1) >= 200:
+                if (isBG1GreaterBG2) {
+                    infusionResult = infusion + calDelta(infusion, 2);
+                } else if ((totalBG >= 1 && totalBG <= 25) || isBG1EqualBG2) {
+                    infusionResult = infusion + calDelta(infusion, 1);
+                } else if (totalBG >= 26 && totalBG <= 75) {
+                    msg = 'No Fusion change';
+                } else if ((totalBG >= 76 && totalBG <= 100)) {
+                    infusionResult = infusion - calDelta(infusion, 1);
+                }
+                else if (totalBG >= 100) {
+                    msg = 'HOLD for 30 second then infusion:';
+                    infusionResult = infusion - calDelta(infusion, 2);
+                }
+                break;
+            default:
+                break;
+        }
+        document.getElementsByClassName("infusion-result")[0].value=infusionResult;
+        console.log("Infusion 2:", infusionResult);
+    }
+    function calDelta(infusion, delta) {
+        let result;
+        switch (true) {
+            case infusion <= 3.0:
+                result = 0.5
+                break;
+            case infusion > 3.0 && infusion < 6.4:
+                result = 1;
+                break;
+            case infusion > 6.5 && infusion < 9.9:
+                result = 1.5;
+                break;
+            case infusion > 10. && infusion < 14.9:
+                result = 2;
+                break;
+            case infusion > 15 && infusion < 19.9:
+                result = 3;
+                break;
+            case infusion > 20 && infusion < 24:
+                result = 4;
+                break;
+            default:
+                break;
+        }
+        return result * delta;
+    }
+</script>
+</body>
+
+</html>
