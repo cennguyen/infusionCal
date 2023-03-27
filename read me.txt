@@ -1,0 +1,2 @@
+This is the demo site for calculate the infusion when we need input 3 params BG1, BG2 and infusion 1, it will calculate and return the infusion 2
+using only HTML and Javascript
