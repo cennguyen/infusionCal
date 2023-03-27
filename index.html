@@ -3,18 +3,18 @@
 
 <head>
     <link rel="stylesheet" href="index.css" />
-    <title>Caculate GB</title>
+    <title>Caculate BG</title>
 </head>
 
 <body>
     <div class="input-text-container">
-        <div class="GB1-container">
-            <span>GB1:</span>
-            <input class='GB1-input' />
+        <div class="BG1-container">
+            <span>BG1:</span>
+            <input class='BG1-input' />
         </div>
-        <div class="GB2-container">
-            <span>GB2:</span>
-            <input class='GB2-input' />
+        <div class="BG2-container">
+            <span>BG2:</span>
+            <input class='BG2-input' />
         </div>
         <div class="infusion-container">
             <span>infusion:</span>
@@ -24,18 +24,15 @@
     </div>
     <div>
         <span>
-            infusion 2: <input class="infusion-result"></input>
+            infusion 2: <input class="infusion-result" disabled="true"></input>
         </span>
     </div>
 </body>
 <script>
     function calInfusion() {
-        const BG1 = document.getElementsByClassName("GB1-input")[0].value;
-        const BG2 = document.getElementsByClassName("GB2-input")[0].value;
+        const BG1 = document.getElementsByClassName("BG1-input")[0].value;
+        const BG2 = document.getElementsByClassName("BG2-input")[0].value;
         const infusion = document.getElementsByClassName("infusion-input")[0].value;
-        console.log(parseInt(BG1),"debug bg1");
-        console.log(parseInt(BG2),"debug bg2");
-        console.log(infusion,"debug infusion ");
         const isBG1EqualBG2 = BG1 === BG2;
         let msg;
         let totalBG;
@@ -109,8 +106,7 @@
             default:
                 break;
         }
-        document.getElementsByClassName("infusion-result")[0].value=infusionResult;
-        console.log("Infusion 2:", infusionResult);
+        document.getElementsByClassName("infusion-result")[0].value = infusionResult;
     }
     function calDelta(infusion, delta) {
         let result;
